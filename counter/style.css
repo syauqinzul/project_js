@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+/* ─── CSS Variables ─── */
+:root {
+  --bg:        #0a0a0f;
+  --panel:     #111118;
+  --border:    #2a2a40;
+  --glow:      #00ffe7;
+  --glow-dim:  rgba(0, 255, 231, 0.15);
+  --accent:    #ff2d78;
+  --accent-dim:rgba(255, 45, 120, 0.15);
+  --text:      #e0e0f0;
+  --muted:     #555570;
+  --btn-plus:  #00ffe7;
+  --btn-minus: #ff2d78;
+  --btn-reset: #888;
+  --btn-save:  #a78bfa;
+  --btn-load:  #34d399;
+}
+
+/* ─── Reset & Base ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,255,231,0.08) 0%, transparent 70%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.02) 39px,
+      rgba(255,255,255,0.02) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.02) 39px,
+      rgba(255,255,255,0.02) 40px
+    );
+  color: var(--text);
+  font-family: 'Share Tech Mono', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* ─── Page Title ─── */
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+  text-align: center;
+}
+
+/* ─── Section Title ─── */
+h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.65rem, 2vw, 0.75rem);
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--glow);
+  text-shadow: 0 0 12px var(--glow);
+  margin-bottom: 2.5rem;
+  text-align: center;
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--glow);
+  box-shadow: 0 0 8px var(--glow);
+  margin: 0.6rem auto 0;
+  opacity: 0.6;
+}
+
+/* ─── Counter Panel ─── */
+.counter-wrapper {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3rem 3.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(0,255,231,0.05),
+    0 0 40px rgba(0,255,231,0.04),
+    0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* Corner decorations */
+.counter-wrapper::before,
+.counter-wrapper::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--glow);
+  border-style: solid;
+  opacity: 0.5;
+}
+.counter-wrapper::before {
+  top: -1px; left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.counter-wrapper::after {
+  bottom: -1px; right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* ─── Count Display ─── */
+#count {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: clamp(5rem, 18vw, 9rem);
+  line-height: 1;
+  color: var(--glow);
+  text-shadow:
+    0 0 20px var(--glow),
+    0 0 60px rgba(0,255,231,0.3),
+    0 0 120px rgba(0,255,231,0.1);
+  letter-spacing: -0.02em;
+  min-width: 3ch;
+  text-align: center;
+  transition: text-shadow 0.15s ease, color 0.15s ease, transform 0.1s ease;
+  user-select: none;
+}
+
+#count.negative {
+  color: var(--accent);
+  text-shadow:
+    0 0 20px var(--accent),
+    0 0 60px rgba(255,45,120,0.3),
+    0 0 120px rgba(255,45,120,0.1);
+}
+
+#count.bump {
+  transform: scale(1.06);
+}
+
+/* ─── Button Groups ─── */
+.btn-group-primary,
+.btn-group-secondary {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ─── Buttons ─── */
+button {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  background: transparent;
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.1s ease,
+    opacity 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+button:hover::before  { opacity: 0.1; }
+button:active::before { opacity: 0.25; }
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* + button */
+button[onclick="increaseCount()"] {
+  color: var(--btn-plus);
+  width: 64px;
+  height: 64px;
+  font-size: 1.5rem;
+  box-shadow: 0 0 12px rgba(0,255,231,0.15);
+}
+button[onclick="increaseCount()"]:hover {
+  box-shadow: 0 0 20px rgba(0,255,231,0.4);
+}
+
+/* − button */
+button[onclick="decreaseCount()"] {
+  color: var(--btn-minus);
+  width: 64px;
+  height: 64px;
+  font-size: 1.5rem;
+  box-shadow: 0 0 12px rgba(255,45,120,0.15);
+}
+button[onclick="decreaseCount()"]:hover {
+  box-shadow: 0 0 20px rgba(255,45,120,0.4);
+}
+
+/* Reset button */
+button[onclick="resetCount()"] {
+  color: var(--btn-reset);
+  padding: 0.6rem 1.4rem;
+}
+button[onclick="resetCount()"]:hover {
+  box-shadow: 0 0 14px rgba(136,136,136,0.3);
+}
+
+/* Save button */
+button[onclick="saveCount()"] {
+  color: var(--btn-save);
+  padding: 0.6rem 1.4rem;
+  box-shadow: 0 0 10px rgba(167,139,250,0.1);
+}
+button[onclick="saveCount()"]:hover {
+  box-shadow: 0 0 18px rgba(167,139,250,0.35);
+}
+
+/* Load button */
+button[onclick="loadCount()"] {
+  color: var(--btn-load);
+  padding: 0.6rem 1.4rem;
+  box-shadow: 0 0 10px rgba(52,211,153,0.1);
+}
+button[onclick="loadCount()"]:hover {
+  box-shadow: 0 0 18px rgba(52,211,153,0.35);
+}
+
+/* ─── Status Bar (optional scanline effect) ─── */
+.counter-wrapper .status {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ─── Page Load Animation ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+h1               { animation: fadeInUp 0.5s ease both; }
+h2               { animation: fadeInUp 0.5s ease 0.1s both; }
+.counter-wrapper { animation: fadeInUp 0.5s ease 0.2s both; }
+
+/* ─── Scanline Overlay ─── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.08) 3px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 999;
+}
